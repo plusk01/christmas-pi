@@ -168,7 +168,7 @@ void midi_process(snd_seq_event_t *ev)
     
     //If this event is a PGMCHANGE type, it's a request to map a channel to an instrument
     if( ev->type == SND_SEQ_EVENT_PGMCHANGE )  {
-       //printf("PGMCHANGE: channel %2d, %5d, %5d\n", ev->data.control.channel, ev->data.control.param,  ev->data.control.value);
+       printf("PGMCHANGE: channel %2d, %5d, %5d\n", ev->data.control.channel, ev->data.control.param,  ev->data.control.value);
 
        //Clear pins state, this is probably the beginning of a new song
        clearPinsState();

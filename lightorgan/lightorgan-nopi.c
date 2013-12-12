@@ -1,5 +1,5 @@
 #include <alsa/asoundlib.h>
-#include <wiringPi.h>
+// #include <wiringPi.h>
 #include <limits.h>
 #include <unistd.h>
 #include <math.h>
@@ -85,6 +85,10 @@ void clearPinChannels() {
 void clearPinsState() {
   clearPinNotes();
   clearPinChannels();
+}
+
+void digitalWrite(int pin, int type) {
+  // printf("digital write: pin %i: status: %i\n", pin, type);
 }
 
 // void pinsOn() {
@@ -201,7 +205,7 @@ void midi_process(snd_seq_event_t *ev)
                     printf("OVERRIDING CHANNEL %i for %i\n", pinChannels[pinIdx], ev->data.note.channel);
                  }
                  //Write to the pin, save the note to pinNotes
-                 printf("Pin %i - %s %i %i \n", pinIdx, isOn ? "on" : "off", ev->data.note.note, ev->data.note.channel);       
+                 printf("Pin %i - %s [note=%i] [channel=%i] \n", pinIdx, isOn ? "on" : "off", ev->data.note.note, ev->data.note.channel);       
                  digitalWrite(pinIdx, 1); 
                  pinNotes[pinIdx] = ev->data.note.note;
                  pinChannels[pinIdx] =  ev->data.note.channel;
@@ -226,10 +230,12 @@ void midi_process(snd_seq_event_t *ev)
           if( PERCUSSION_PIN_IDX != -1 ) {
              if( percussionOn) {
                digitalWrite(pinIdx, 0); 
+               printf("Pin %i - %s [note=%i] [channel=%i] \n", pinIdx, "on", ev->data.note.note, ev->data.note.channel);
                percussionOn = 0;
              }
              else {
                digitalWrite(pinIdx, 1);
+               printf("Pin %i - %s %i %i \n", pinIdx, "off", ev->data.note.note, ev->data.note.channel);
                percussionOn = 1;
              }
           }
@@ -256,15 +262,15 @@ int main()
     // }
     
     //Setup wiringPi
-    if( wiringPiSetup() == -1) {
-      exit(1);
-    }
+    // if( wiringPiSetup() == -1) {
+    //   exit(1);
+    // }
    
-    //Setup all the pins to use OUTPUT mode
-    int i=0;
-    for(i=0; i< TOTAL_PINS; i++) {
-      pinMode(i, OUTPUT);
-    }
+    // //Setup all the pins to use OUTPUT mode
+    // int i=0;
+    // for(i=0; i< TOTAL_PINS; i++) {
+    //   pinMode(i, OUTPUT);
+    // }
 
 
     clearPinsState();

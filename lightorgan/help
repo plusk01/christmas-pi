@@ -1,0 +1,1013 @@
+Help on module pyalsa.alsaseq in pyalsa:
+
+NAME
+    pyalsa.alsaseq - libasound alsaseq wrapper
+
+FILE
+    /usr/local/lib/python2.7/dist-packages/pyalsa/alsaseq.so
+
+CLASSES
+    __builtin__.int(__builtin__.object)
+        alsaseq.Constant
+    __builtin__.object
+        alsaseq.SeqEvent
+        alsaseq.Sequencer
+    exceptions.Exception(exceptions.BaseException)
+        alsaseq.SequencerError
+    
+    class Constant(__builtin__.int)
+     |  Constant() -> Constant object
+     |  
+     |  Represents one of the many integer constants from the
+     |  libasound sequencer API.
+     |  
+     |  This class serves the following purposes:
+     |    a. wrap the SND_SEQ* constants to a python int;
+     |    b. provide a string representation of the constant;
+     |  
+     |  For a), this class is a subclass of the python int. Example:
+     |    >>> import alsaseq
+     |    >>> print alsaseq.SEQ_EVENT_NOTE
+     |    5
+     |    >>> event = alsaseq.SeqEvent(alsaseq.SEQ_EVENT_NOTE)
+     |    >>> print event.queue
+     |    253
+     |    >>> print event.dest
+     |    (0, 0)
+     |  
+     |  For b), you can get the name of the constant by calling the appropiate
+     |  method (__str__ or __repr__). Example:
+     |    >>> print str(event.queue), repr(event.queue)
+     |    SEQ_QUEUE_DIRECT SEQ_QUEUE_DIRECT(0xfd)
+     |    >>> print str(event.dest)
+     |    (SEQ_CLIENT_SYSTEM(0x0), SEQ_PORT_SYSTEM_TIMER(0x0))
+     |  
+     |  This class implements some of the bitwise operations from the
+     |  Python number protocol.
+     |  
+     |  Method resolution order:
+     |      Constant
+     |      __builtin__.int
+     |      __builtin__.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __add__(...)
+     |      x.__add__(y) <==> x+y
+     |  
+     |  __and__(...)
+     |      x.__and__(y) <==> x&y
+     |  
+     |  __invert__(...)
+     |      x.__invert__() <==> ~x
+     |  
+     |  __or__(...)
+     |      x.__or__(y) <==> x|y
+     |  
+     |  __radd__(...)
+     |      x.__radd__(y) <==> y+x
+     |  
+     |  __rand__(...)
+     |      x.__rand__(y) <==> y&x
+     |  
+     |  __repr__(...)
+     |      x.__repr__() <==> repr(x)
+     |  
+     |  __ror__(...)
+     |      x.__ror__(y) <==> y|x
+     |  
+     |  __rsub__(...)
+     |      x.__rsub__(y) <==> y-x
+     |  
+     |  __rxor__(...)
+     |      x.__rxor__(y) <==> y^x
+     |  
+     |  __str__(...)
+     |      x.__str__() <==> str(x)
+     |  
+     |  __sub__(...)
+     |      x.__sub__(y) <==> x-y
+     |  
+     |  __xor__(...)
+     |      x.__xor__(y) <==> x^y
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from __builtin__.int:
+     |  
+     |  __abs__(...)
+     |      x.__abs__() <==> abs(x)
+     |  
+     |  __cmp__(...)
+     |      x.__cmp__(y) <==> cmp(x,y)
+     |  
+     |  __coerce__(...)
+     |      x.__coerce__(y) <==> coerce(x, y)
+     |  
+     |  __div__(...)
+     |      x.__div__(y) <==> x/y
+     |  
+     |  __divmod__(...)
+     |      x.__divmod__(y) <==> divmod(x, y)
+     |  
+     |  __float__(...)
+     |      x.__float__() <==> float(x)
+     |  
+     |  __floordiv__(...)
+     |      x.__floordiv__(y) <==> x//y
+     |  
+     |  __format__(...)
+     |  
+     |  __getattribute__(...)
+     |      x.__getattribute__('name') <==> x.name
+     |  
+     |  __getnewargs__(...)
+     |  
+     |  __hash__(...)
+     |      x.__hash__() <==> hash(x)
+     |  
+     |  __hex__(...)
+     |      x.__hex__() <==> hex(x)
+     |  
+     |  __index__(...)
+     |      x[y:z] <==> x[y.__index__():z.__index__()]
+     |  
+     |  __int__(...)
+     |      x.__int__() <==> int(x)
+     |  
+     |  __long__(...)
+     |      x.__long__() <==> long(x)
+     |  
+     |  __lshift__(...)
+     |      x.__lshift__(y) <==> x<<y
+     |  
+     |  __mod__(...)
+     |      x.__mod__(y) <==> x%y
+     |  
+     |  __mul__(...)
+     |      x.__mul__(y) <==> x*y
+     |  
+     |  __neg__(...)
+     |      x.__neg__() <==> -x
+     |  
+     |  __nonzero__(...)
+     |      x.__nonzero__() <==> x != 0
+     |  
+     |  __oct__(...)
+     |      x.__oct__() <==> oct(x)
+     |  
+     |  __pos__(...)
+     |      x.__pos__() <==> +x
+     |  
+     |  __pow__(...)
+     |      x.__pow__(y[, z]) <==> pow(x, y[, z])
+     |  
+     |  __rdiv__(...)
+     |      x.__rdiv__(y) <==> y/x
+     |  
+     |  __rdivmod__(...)
+     |      x.__rdivmod__(y) <==> divmod(y, x)
+     |  
+     |  __rfloordiv__(...)
+     |      x.__rfloordiv__(y) <==> y//x
+     |  
+     |  __rlshift__(...)
+     |      x.__rlshift__(y) <==> y<<x
+     |  
+     |  __rmod__(...)
+     |      x.__rmod__(y) <==> y%x
+     |  
+     |  __rmul__(...)
+     |      x.__rmul__(y) <==> y*x
+     |  
+     |  __rpow__(...)
+     |      y.__rpow__(x[, z]) <==> pow(x, y[, z])
+     |  
+     |  __rrshift__(...)
+     |      x.__rrshift__(y) <==> y>>x
+     |  
+     |  __rshift__(...)
+     |      x.__rshift__(y) <==> x>>y
+     |  
+     |  __rtruediv__(...)
+     |      x.__rtruediv__(y) <==> y/x
+     |  
+     |  __truediv__(...)
+     |      x.__truediv__(y) <==> x/y
+     |  
+     |  __trunc__(...)
+     |      Truncating an Integral returns itself.
+     |  
+     |  bit_length(...)
+     |      int.bit_length() -> int
+     |      
+     |      Number of bits necessary to represent self in binary.
+     |      >>> bin(37)
+     |      '0b100101'
+     |      >>> (37).bit_length()
+     |      6
+     |  
+     |  conjugate(...)
+     |      Returns self, the complex conjugate of any int.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from __builtin__.int:
+     |  
+     |  denominator
+     |      the denominator of a rational number in lowest terms
+     |  
+     |  imag
+     |      the imaginary part of a complex number
+     |  
+     |  numerator
+     |      the numerator of a rational number in lowest terms
+     |  
+     |  real
+     |      the real part of a complex number
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from __builtin__.int:
+     |  
+     |  __new__ = <built-in method __new__ of type object>
+     |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+    
+    class SeqEvent(__builtin__.object)
+     |  SeqEvent(type[, timestamp[,timemode]]) -> SeqEvent object
+     |  
+     |  Creates an Alsa Sequencer Event object. The type must be one of the
+     |  alsaseq.SEQ_EVENT_* constants. The timestamp specifies if tick (midi)
+     |  or real time is used, must be alsaseq.SEQ_TIME_STAMP_TICK or
+     |  alsaseq.SEQ_TIME_STAMP_REAL. The timemode specifies if the time will
+     |  be absolute or relative, must be alsaseq.SEQ_TIME_MODE_ABS or
+     |  alsaseq.SEQ_TIME_MODE_REL.
+     |  
+     |  The timestamp and timemode defaults to SEQ_TIME_STAMP_TICK and
+     |  SEQ_TIME_MODE_ABS when they are not specified.
+     |  
+     |  SeqEvent objects are received or sent using a Sequencer object. The
+     |  data of the event can be set or retrieved using the set_data() or
+     |  get_data() methods; both use a dictionary. The rest of properties of
+     |  a SeqEvent can be accesed and changed using the SeqEvent attributes.
+     |  
+     |  The attributes and defaults values are:
+     |  type -- event type.
+     |  timestamp -- tick(midi) or real(nanoseconds). Default: SEQ_TIME_STAMP_TICK.
+     |  timemode -- relative or absolute. Default: SEQ_TIME_MODE_ABS.
+     |  queue -- queue id. Default: SEQ_QUEUE_DIRECT
+     |  time -- time of this event. Default: 0.
+     |  source -- source address tuple (client,port). Default: (0, 0).
+     |  dest -- dest address tuple (client, port). Default: (0, 0).
+     |  
+     |  There are dictionaries available as attributes, that contains
+     |  alsaseq.SEQ* constants that can be used for each attribute:
+     |  _dtype -- event type constants.
+     |  _dtimestamp -- event timestamp constants.
+     |  _dtimemode -- event timemode constants.
+     |  _dqueue -- queue id's.
+     |  _dclient -- client address (for source an dest).
+     |  _dport -- port address (for source an dest).
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(...)
+     |      x.__init__(...) initializes x; see help(type(x)) for signature
+     |  
+     |  __repr__(...)
+     |      x.__repr__() <==> repr(x)
+     |  
+     |  get_data(...)
+     |      get_data() -> dict
+     |      
+     |      Returns a new dictionary with the data of this SeqEvent.
+     |      Changes to the returned dictionary will not change this SeqEvent data,
+     |      for changing an event data use the set_data() method.
+     |      
+     |      The dictionary items are key: value; where key is the name of the
+     |      data structure from alsa API and value is an integer or a list of them.
+     |      
+     |      The following name of structures are available:
+     |        'note.channel' -> int
+     |        'note.note' -> int
+     |        'note.velocity' -> int
+     |        'note.off_velocity' -> int
+     |        'note.duration' -> int
+     |        'control.channel' -> int
+     |        'control.value' -> int
+     |        'control.param' -> int
+     |        'queue.queue' -> int
+     |        'addr.client' -> int
+     |        'addr.port' -> int
+     |        'connect.sender.client' -> int
+     |        'connect.sender.port' -> int
+     |        'connect.dest.client' -> int
+     |        'connect.dest.port' -> int
+     |        'result.event' -> int
+     |        'result.result' -> int
+     |        'ext' -> list of int with sysex or variable data
+     |      
+     |      The exact items returned dependens on the event type of this SeqEvent.
+     |      For a control event, only 'control.*' may be returned; for a sysex 
+     |      event, only 'ext' may be returned; for a note event, only 'note.*' may 
+     |      be returned and so on.
+     |  
+     |  set_data(...)
+     |      set_data(dict)
+     |      Changes the data of this SeqEvent, updating internal data structure 
+     |      from the given dictionary.
+     |      
+     |      The dictionary items should be the same as described in the get_data() 
+     |      method and be the appropiate for this SeqEvent type.
+     |      
+     |      This method does not check if a given structure correspond to is valid 
+     |      for this SeqEvent type; so setting the 'control.param' or the 'ext' 
+     |      structures for a NOTE SeqEvent may change another data structure 
+     |      or will simple have no effect once sent.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  dest
+     |      dest -> tuple (client_id, port_id)
+     |      
+     |      Tuple representing the destination address of this alsaseq.SeqEvent.
+     |      The tuple is (client_id, port_id). If the client or port id are known,
+     |      the appropiate constant may be used, otherwise integers are expected.
+     |  
+     |  is_abstime
+     |      is_abstime -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is abstime timed (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_channel_type
+     |      is_channel_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type channel (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_control_type
+     |      is_control_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type control (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_direct
+     |      is_direct -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is sent directly (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_fixed
+     |      is_fixed -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is fixed (True) or not (False).
+     |      Note: read-only attribute.
+     |  
+     |  is_fixed_type
+     |      is_fixed_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type fixed (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_instr_type
+     |      is_instr_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type instr (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_message_type
+     |      is_message_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type message (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_note_type
+     |      is_note_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type note (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_prior
+     |      is_prior -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is prior (True) or not (False).
+     |      Note: read-only attribute.
+     |  
+     |  is_queue_type
+     |      is_queue_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is a queue event (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_real
+     |      is_real -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is real timed (True) or not (False).
+     |      Note: read-only attribute.
+     |  
+     |  is_reltime
+     |      is_reltime -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is a reltime timed (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_reserved
+     |      is_reserved -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is reserved (True) or not (False).
+     |      Note: read-only attribute.
+     |  
+     |  is_result_type
+     |      is_result_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type result (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_sample_type
+     |      is_sample_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type sample (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_subscribe_type
+     |      is_subscribe_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type subscribe (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_tick
+     |      is_tick -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is tick timed (True) or not (False).
+     |      Note: read-only attribute.
+     |  
+     |  is_user_type
+     |      is_user_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type user (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_variable
+     |      is_variable -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is variable (True) or not (False).
+     |      Note: read-only attribute.
+     |  
+     |  is_variable_type
+     |      is_variable_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type variable (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  is_varusr
+     |      is_varusr -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is varusr (True) or not (False).
+     |      Note: read-only attribute.
+     |  
+     |  is_varusr_type
+     |      is_message_type -> boolean
+     |      
+     |      Indicates if this alsaseq.SeqEvent is of type varusr (True) or not
+     |      (False). Note: read-only attribute.
+     |  
+     |  queue
+     |      queue -> int
+     |      
+     |      The send queue id of this alsaseq.SeqEvent.
+     |  
+     |  source
+     |      source -> tuple (client_id, port_id)
+     |      
+     |      Tuple representing the send source address of this alsaseq.SeqEvent.
+     |      The tuple is (client_id, port_id). If the client or port id are known,
+     |      the appropiate constant may be used, otherwise integers are expected.
+     |  
+     |  tag
+     |      tag -> int
+     |      
+     |      The tag of this alsaseq.SeqEvent (range:0-255).
+     |  
+     |  time
+     |      time -> int or float
+     |      
+     |      The send time of this alsaseq.SeqEvent.
+     |      If the timestamp of the SeqEvent is SEQ_TIME_STAMP_TICK, an
+     |      integer value is used which represents the midi tick time; 
+     |      if the timestamp is SEQ_TIME_STAMP_REAL, a float value is used
+     |      which represents seconds the same way Python time module.
+     |  
+     |  timemode
+     |      timemode -> Constant object
+     |      
+     |      The time mode flag of this alsaseq.SeqEvent;
+     |      use alsaseq.SEQ_TIME_MODE_ABS or alsaseq.SEQ_TIME_MODE_REL.
+     |  
+     |  timestamp
+     |      timestamp -> Constant object
+     |      
+     |      The time stamp flag of this alsaseq.SeqEvent;
+     |      use alsaseq.SEQ_TIME_STAMP_TICK or alsaseq.SEQ_TIME_STAMP_REAL.
+     |  
+     |  type
+     |      type -> Constant object
+     |      
+     |      The type of this alsaseq.SeqEvent; Use one of the
+     |      alsaseq.SEQ_EVENT_* constants.
+     |      
+     |      Note: changing a SeqEvent type will *ERASE* AND *CLEAN* its data!!
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __new__ = <built-in method __new__ of type object>
+     |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+    
+    class Sequencer(__builtin__.object)
+     |  Sequencer([name, clientname, streams, mode, maxreceiveevents]) -> Sequencer object
+     |  
+     |  Creates and opens an ALSA sequencer. The features of the Sequencer are:
+     |  - send/receive events (as SeqEvent objects)
+     |  - create ports
+     |  - list all ALSA clients and their port connections
+     |  - connect/disconnect arbitrary ports
+     |  - create and control queues
+     |  - get info about a port or a client
+     |  
+     |  The name must correspond to the special ALSA name (for example: 'hw'); 
+     |  if not specified, 'default' is used. The clientname is the name of this 
+     |  client; if not specified, 'pyalsa-PID' is used.
+     |  
+     |  The streams specifies if you want to receive, send or both; use 
+     |  SEQ_OPEN_INPUT, SEQ_OPEN_OUTPUT or SEQ_OPEN_DUPLEX. If not specified, 
+     |  SEQ_OPEN_DUPLEX is used.
+     |  The mode specifies if this client should block or not, use SEQ_BLOCK or 
+     |  SEQ_NONBLOCK. If not specified, SEQ_NONBLOCK is used.
+     |  The maxreceiveevents is a number that represents how many SeqEvent 
+     |  objects are returned by the receive() method. If not specified, the 
+     |  default is 4. 
+     |  
+     |  There is no method for closing the sequencer, it will remain open as 
+     |  long as the Sequencer object exists. For closing the sequencer you 
+     |  must explicitly del() the returned object.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(...)
+     |      x.__init__(...) initializes x; see help(type(x)) for signature
+     |  
+     |  __repr__(...)
+     |      x.__repr__() <==> repr(x)
+     |  
+     |  connect_ports(...)
+     |      connect_ports(srcaddr,dstaddr,queue,exclusive,time_update,time_real)
+     |      
+     |      Connect the ports specified by srcaddr and dstaddr.
+     |      
+     |      Parameters:
+     |        srcaddr -- (tuple) the (client_id, port_id) tuple for the source
+     |                    port (the port sending events)
+     |        dstaddr -- (tuple) the (client_id, port_id) tuple for the destination
+     |                    port (the port receiveng events)
+     |        queue   -- the queue of the connection.
+     |                   If not specified, defaults to 0.
+     |        exclusive -- 1 if the connection is exclusive, 0 otherwise.
+     |                     If not specified, defaults to 0.
+     |        time_update -- 1 if the connection should update time, 0 otherwise.
+     |                       If not specified, defaults to 0.
+     |        time_real -- 1 if the update time is in real, 0 if is in tick.
+     |                       If not specified, defaults to 0.
+     |      Raises:
+     |        SequenceError: if ALSA can't connect the ports
+     |  
+     |  connection_list(...)
+     |      connection_list() -> list
+     |      
+     |      List all clients and their ports connections.
+     |      
+     |      Returns:
+     |        (list) a list of tuples: client_name, client_id, port_list:.
+     |          client_name -- the client's name.
+     |          client_id -- the client's id.
+     |          port_list -- a list of tuples: port_name, port_id, connection_list:
+     |            port_name -- the name of the port.
+     |            port_id -- the port id.
+     |            connection_list -- a list of tuples: read_conn, write_conn:
+     |              read_conn -- a list of (client_id, port_id, info) tuples this
+     |                           port is connected to (sends events);
+     |                           info is the same of the get_connect_info() method.
+     |              write_conn -- a list of (client_id, port_id, info) tuples this
+     |                            port is connected from (receives events);
+     |                            info is the same of the get_connect_info() method.
+     |  
+     |  create_queue(...)
+     |      create_queue(name=None)-> int
+     |      
+     |      Creates a queue with the optional given name.
+     |      
+     |      Parameters:
+     |        name -- the name of the queue.
+     |      Returns:
+     |        the queue id.
+     |      Raises:
+     |        SequencerError: if ALSA can't create the queue
+     |  
+     |  create_simple_port(...)
+     |      create_simple_port(name, type, caps=0) -> int
+     |      Creates a port for receiving or sending events.
+     |      
+     |      Parameters:
+     |          name -- name of the port
+     |          type -- type of port (use one of the alsaseq.SEQ_PORT_TYPE_*
+     |                  constants)
+     |          caps -- capabilites of the port (use bitwise alsaseq.SEQ_PORT_CAP_*
+     |                  constants). Default=0
+     |      Returns:
+     |        the port id.
+     |      Raises:
+     |        TypeError: if an invalid type was used in a parameter
+     |        ValueError: if an invalid value was used in a parameter
+     |        SequencerError: if ALSA can't create the port
+     |  
+     |  delete_queue(...)
+     |      delete_queue(queue)
+     |      
+     |      Deletes (frees) a queue.
+     |      
+     |      Parameters:
+     |        queue -- the queue id.
+     |      Raises:
+     |        SequencerError: if ALSA can't delete the queue.
+     |  
+     |  disconnect_ports(...)
+     |      disconnect_ports(srcaddr, destaddr)
+     |      
+     |      Disconnect the ports specified by srcaddr and dstaddr.
+     |      
+     |      Parameters:
+     |        srcaddr -- (tuple) the client_id, port_id tuple for the source
+     |                   port (the port sending events)
+     |        dstaddr -- (tuple) the client_id, port_id tuple for the destination
+     |                   port (the port receiveng events)
+     |      Raises:
+     |        SequenceError: if ALSA can't disconnect the port
+     |  
+     |  drain_output(...)
+     |      drain_output()
+     |      
+     |      Drain the output, making sure all events int the buffer are sent.
+     |      The events sent may remain unprocessed, to make sure they are
+     |      processed, call the sync_output_queue() method.
+     |      
+     |      Raises:
+     |        SequencerError: if ALSA can't drain the output
+     |  
+     |  get_client_info(...)
+     |      get_client_info(client_id = self.client_id) -> dictionary
+     |      
+     |      Retrieve info about an existing client.
+     |      
+     |      Parameters:
+     |        client_id -- the client id (defaults to: self.client_id)
+     |      Returns:
+     |        (dict) a dictionary with the following values:
+     |          id  -- id of client.
+     |          type -- type of client (SEQ_USER_CLIENT or SEQ_KERNEL_CLIENT).
+     |          name -- name of client.
+     |          broadcast_filter -- broadcast filter flag of client as int.
+     |          error_bounce -- error bounce of client as int.
+     |          event_filter -- event filter of client as string.
+     |          num_ports -- number of opened ports of client.
+     |          event_lost -- number of lost events of client.
+     |      Raises:
+     |       SequencerError: ALSA error occurred.
+     |  
+     |  get_connect_info(...)
+     |      get_connect_info(srcaddr, dstaddr) -> dictionary
+     |      
+     |      Retrieve the subscribe info of the specified connection.
+     |      
+     |      Parameters:
+     |        srcaddr -- (tuple) the client_id, port_id tuple for the source
+     |                   port (the port sending events)
+     |        dstaddr -- (tuple) the client_id, port_id tuple for the destination
+     |                   port (the port receiveng events)
+     |      Returns:
+     |        (dict) a dictionary with the following values:
+     |          queue -- 
+     |          exclusive -- 
+     |          time_update -- 
+     |          time_real --- 
+     |      Raises:
+     |        SequenceError: if ALSA can't retrieve the connection or the
+     |                       connection doesn't exists.
+     |  
+     |  get_port_info(...)
+     |      get_port_info(port_id, client_id = self.client_id) -> dictionary
+     |      
+     |      Retrieve info about an existing client's port.
+     |      
+     |      Parameters:
+     |        port_id -- the port id
+     |        client_id -- the client id (defaults to: self.client_id)
+     |      Returns:
+     |        (dict) a dictionary with the following values:
+     |          name -- the port name
+     |          type -- the port type bit flags
+     |          capability -- the port capability bit flags as integer
+     |      Raises:
+     |        SequencerError: ALSA error occurred.
+     |  
+     |  output_event(...)
+     |      output_event(event)
+     |      
+     |      Put the the given event in the outputbuffer. This actually will enqueue
+     |      the event, to make sure it's sent, use the drain_output() method.
+     |      
+     |      Parameters:
+     |        event -- a SeqEvent object
+     |      Raises:
+     |        SequencerError: if ALSA can't send the event
+     |  
+     |  parse_address(...)
+     |      parse_address(string) -> tuple
+     |      
+     |      Parses the given string as an ALSA client:port. You can use client,
+     |      port id's or names.
+     |      
+     |      Parameters:
+     |        string -- the address in the format client:port.
+     |      Returns:
+     |        the tuple (client_id, port_id).
+     |      Raises:
+     |        SequencerError: if ALSA can't parse the given address
+     |  
+     |  queue_tempo(...)
+     |      queue_tempo(queue, tempo=None, ppq=None) -> tuple
+     |      Query and changes the queue tempo. For querying (not changing) the queue
+     |      tempo, pass only the queue id.
+     |      
+     |      Parameters:
+     |        queue -- the queue id.
+     |        tempo -- the new queue tempo or None for keeping the current tempo.
+     |        ppq -- the new queue ppq or None for keeping the current tempo.
+     |      Returns:
+     |        a tuple (tempo, ppq) with the current or changed tempo.
+     |      Raises:
+     |        SequencerError: if ALSA can't change the queue tempo or an invalid
+     |                        queue was specified.
+     |  
+     |  receive_events(...)
+     |      receive_events(timeout = 0, maxevents = self.receive_maxevents) -> list
+     |      
+     |      Receive events.
+     |      
+     |      Parameters:
+     |        timeout -- (int) time for wating for events in miliseconds
+     |        maxevents -- (int) max events to be returned
+     |      Returns:
+     |        (list) a list of alsaseq.SeqEvent objects
+     |      Raises:
+     |        TypeError: if an invalid type was used in a parameter
+     |        SequencerError: if ALSA error occurs.
+     |  
+     |  register_poll(...)
+     |      register_poll(pollObj, input=False, output=False) -- Register poll file descriptors.
+     |  
+     |  start_queue(...)
+     |      start_queue(queue)
+     |      
+     |      Starts the specified queue.
+     |      
+     |      Parameters:
+     |        queue -- the queue id.
+     |      Raises:
+     |        SequencerError: if ALSA can't start the queue.
+     |  
+     |  stop_queue(...)
+     |      stop_queue(queue)
+     |      
+     |      Stops the specified queue.
+     |      
+     |      Parameters:
+     |        queue -- the queue id.
+     |      Raises:
+     |        SequencerError: if ALSA can't stop the queue.
+     |  
+     |  sync_output_queue(...)
+     |      sync_output_queue()
+     |      
+     |      Waits until all events of this clients are processed.
+     |      
+     |      Raises:
+     |        SequencerError: if an ALSA error occurs.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  client_id
+     |      client_id -> int
+     |      
+     |      The client id of this alsaseq.Sequencer.
+     |      Note: read-only attribute.
+     |  
+     |  clientname
+     |      clientname -> string
+     |      
+     |      The client name of this alsaseq.Sequencer
+     |  
+     |  mode
+     |      mode -> Constant object
+     |      
+     |      The blocking mode of this alsaseq.Sequencer. Use
+     |      alsaseq.SEQ_BLOCK, alsaseq.SEQ_NONBLOCK.
+     |  
+     |  name
+     |      name -> string
+     |      
+     |      The alsa device name of this alsaseq.Sequencer.
+     |      Note: read-only attribute.
+     |  
+     |  streams
+     |      streams -> Constant object
+     |      
+     |      The streams of this alsaseq.Sequencer. Posible values:
+     |      alsaseq.SEQ_OPEN_OUTPUT, alsaseq.SEQ_OPEN_INPUT, 
+     |      alsaseq.SEQ_OPEN_DUPLEX.
+     |      Note: read-only attribute.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __new__ = <built-in method __new__ of type object>
+     |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+    
+    class SequencerError(exceptions.Exception)
+     |  Method resolution order:
+     |      SequencerError
+     |      exceptions.Exception
+     |      exceptions.BaseException
+     |      __builtin__.object
+     |  
+     |  Data descriptors defined here:
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.Exception:
+     |  
+     |  __init__(...)
+     |      x.__init__(...) initializes x; see help(type(x)) for signature
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from exceptions.Exception:
+     |  
+     |  __new__ = <built-in method __new__ of type object>
+     |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.BaseException:
+     |  
+     |  __delattr__(...)
+     |      x.__delattr__('name') <==> del x.name
+     |  
+     |  __getattribute__(...)
+     |      x.__getattribute__('name') <==> x.name
+     |  
+     |  __getitem__(...)
+     |      x.__getitem__(y) <==> x[y]
+     |  
+     |  __getslice__(...)
+     |      x.__getslice__(i, j) <==> x[i:j]
+     |      
+     |      Use of negative indices is not supported.
+     |  
+     |  __reduce__(...)
+     |  
+     |  __repr__(...)
+     |      x.__repr__() <==> repr(x)
+     |  
+     |  __setattr__(...)
+     |      x.__setattr__('name', value) <==> x.name = value
+     |  
+     |  __setstate__(...)
+     |  
+     |  __str__(...)
+     |      x.__str__() <==> str(x)
+     |  
+     |  __unicode__(...)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from exceptions.BaseException:
+     |  
+     |  __dict__
+     |  
+     |  args
+     |  
+     |  message
+
+DATA
+    SEQ_ADDRESS_BROADCAST = SEQ_ADDRESS_BROADCAST(0xff)
+    SEQ_ADDRESS_SUBSCRIBERS = SEQ_ADDRESS_SUBSCRIBERS(0xfe)
+    SEQ_ADDRESS_UNKNOWN = SEQ_ADDRESS_UNKNOWN(0xfd)
+    SEQ_BLOCK = SEQ_BLOCK(0x0)
+    SEQ_CLIENT_SYSTEM = SEQ_CLIENT_SYSTEM(0x0)
+    SEQ_EVENT_BOUNCE = SEQ_EVENT_BOUNCE(0x83)
+    SEQ_EVENT_CHANPRESS = SEQ_EVENT_CHANPRESS(0xc)
+    SEQ_EVENT_CLIENT_CHANGE = SEQ_EVENT_CLIENT_CHANGE(0x3e)
+    SEQ_EVENT_CLIENT_EXIT = SEQ_EVENT_CLIENT_EXIT(0x3d)
+    SEQ_EVENT_CLIENT_START = SEQ_EVENT_CLIENT_START(0x3c)
+    SEQ_EVENT_CLOCK = SEQ_EVENT_CLOCK(0x24)
+    SEQ_EVENT_CONTINUE = SEQ_EVENT_CONTINUE(0x1f)
+    SEQ_EVENT_CONTROL14 = SEQ_EVENT_CONTROL14(0xe)
+    SEQ_EVENT_CONTROLLER = SEQ_EVENT_CONTROLLER(0xa)
+    SEQ_EVENT_ECHO = SEQ_EVENT_ECHO(0x32)
+    SEQ_EVENT_KEYPRESS = SEQ_EVENT_KEYPRESS(0x8)
+    SEQ_EVENT_KEYSIGN = SEQ_EVENT_KEYSIGN(0x18)
+    SEQ_EVENT_NONE = SEQ_EVENT_NONE(0xff)
+    SEQ_EVENT_NONREGPARAM = SEQ_EVENT_NONREGPARAM(0xf)
+    SEQ_EVENT_NOTE = SEQ_EVENT_NOTE(0x5)
+    SEQ_EVENT_NOTEOFF = SEQ_EVENT_NOTEOFF(0x7)
+    SEQ_EVENT_NOTEON = SEQ_EVENT_NOTEON(0x6)
+    SEQ_EVENT_OSS = SEQ_EVENT_OSS(0x33)
+    SEQ_EVENT_PGMCHANGE = SEQ_EVENT_PGMCHANGE(0xb)
+    SEQ_EVENT_PITCHBEND = SEQ_EVENT_PITCHBEND(0xd)
+    SEQ_EVENT_PORT_CHANGE = SEQ_EVENT_PORT_CHANGE(0x41)
+    SEQ_EVENT_PORT_EXIT = SEQ_EVENT_PORT_EXIT(0x40)
+    SEQ_EVENT_PORT_START = SEQ_EVENT_PORT_START(0x3f)
+    SEQ_EVENT_PORT_SUBSCRIBED = SEQ_EVENT_PORT_SUBSCRIBED(0x42)
+    SEQ_EVENT_PORT_UNSUBSCRIBED = SEQ_EVENT_PORT_UNSUBSCRIBED(0x43)
+    SEQ_EVENT_QFRAME = SEQ_EVENT_QFRAME(0x16)
+    SEQ_EVENT_QUEUE_SKEW = SEQ_EVENT_QUEUE_SKEW(0x26)
+    SEQ_EVENT_REGPARAM = SEQ_EVENT_REGPARAM(0x10)
+    SEQ_EVENT_RESET = SEQ_EVENT_RESET(0x29)
+    SEQ_EVENT_RESULT = SEQ_EVENT_RESULT(0x1)
+    SEQ_EVENT_SENSING = SEQ_EVENT_SENSING(0x2a)
+    SEQ_EVENT_SETPOS_TICK = SEQ_EVENT_SETPOS_TICK(0x21)
+    SEQ_EVENT_SETPOS_TIME = SEQ_EVENT_SETPOS_TIME(0x22)
+    SEQ_EVENT_SONGPOS = SEQ_EVENT_SONGPOS(0x14)
+    SEQ_EVENT_SONGSEL = SEQ_EVENT_SONGSEL(0x15)
+    SEQ_EVENT_START = SEQ_EVENT_START(0x1e)
+    SEQ_EVENT_STOP = SEQ_EVENT_STOP(0x20)
+    SEQ_EVENT_SYNC_POS = SEQ_EVENT_SYNC_POS(0x27)
+    SEQ_EVENT_SYSEX = SEQ_EVENT_SYSEX(0x82)
+    SEQ_EVENT_SYSTEM = SEQ_EVENT_SYSTEM(0x0)
+    SEQ_EVENT_TEMPO = SEQ_EVENT_TEMPO(0x23)
+    SEQ_EVENT_TICK = SEQ_EVENT_TICK(0x25)
+    SEQ_EVENT_TIMESIGN = SEQ_EVENT_TIMESIGN(0x17)
+    SEQ_EVENT_TUNE_REQUEST = SEQ_EVENT_TUNE_REQUEST(0x28)
+    SEQ_EVENT_USR0 = SEQ_EVENT_USR0(0x5a)
+    SEQ_EVENT_USR1 = SEQ_EVENT_USR1(0x5b)
+    SEQ_EVENT_USR2 = SEQ_EVENT_USR2(0x5c)
+    SEQ_EVENT_USR3 = SEQ_EVENT_USR3(0x5d)
+    SEQ_EVENT_USR4 = SEQ_EVENT_USR4(0x5e)
+    SEQ_EVENT_USR5 = SEQ_EVENT_USR5(0x5f)
+    SEQ_EVENT_USR6 = SEQ_EVENT_USR6(0x60)
+    SEQ_EVENT_USR7 = SEQ_EVENT_USR7(0x61)
+    SEQ_EVENT_USR8 = SEQ_EVENT_USR8(0x62)
+    SEQ_EVENT_USR9 = SEQ_EVENT_USR9(0x63)
+    SEQ_EVENT_USR_VAR0 = SEQ_EVENT_USR_VAR0(0x87)
+    SEQ_EVENT_USR_VAR1 = SEQ_EVENT_USR_VAR1(0x88)
+    SEQ_EVENT_USR_VAR2 = SEQ_EVENT_USR_VAR2(0x89)
+    SEQ_EVENT_USR_VAR3 = SEQ_EVENT_USR_VAR3(0x8a)
+    SEQ_EVENT_USR_VAR4 = SEQ_EVENT_USR_VAR4(0x8b)
+    SEQ_KERNEL_CLIENT = SEQ_KERNEL_CLIENT(0x2)
+    SEQ_LIB_VERSION_STR = '1.0.25'
+    SEQ_NONBLOCK = SEQ_NONBLOCK(0x1)
+    SEQ_OPEN_DUPLEX = SEQ_OPEN_DUPLEX(0x3)
+    SEQ_OPEN_INPUT = SEQ_OPEN_INPUT(0x2)
+    SEQ_OPEN_OUTPUT = SEQ_OPEN_OUTPUT(0x1)
+    SEQ_PORT_CAP_DUPLEX = SEQ_PORT_CAP_DUPLEX(0x10)
+    SEQ_PORT_CAP_NONE = SEQ_PORT_CAP_NONE(0x0)
+    SEQ_PORT_CAP_NO_EXPORT = SEQ_PORT_CAP_NO_EXPORT(0x80)
+    SEQ_PORT_CAP_READ = SEQ_PORT_CAP_READ(0x1)
+    SEQ_PORT_CAP_SUBS_READ = SEQ_PORT_CAP_SUBS_READ(0x20)
+    SEQ_PORT_CAP_SUBS_WRITE = SEQ_PORT_CAP_SUBS_WRITE(0x40)
+    SEQ_PORT_CAP_SYNC_READ = SEQ_PORT_CAP_SYNC_READ(0x4)
+    SEQ_PORT_CAP_SYNC_WRITE = SEQ_PORT_CAP_SYNC_WRITE(0x8)
+    SEQ_PORT_CAP_WRITE = SEQ_PORT_CAP_WRITE(0x2)
+    SEQ_PORT_SYSTEM_ANNOUNCE = SEQ_PORT_SYSTEM_ANNOUNCE(0x1)
+    SEQ_PORT_SYSTEM_TIMER = SEQ_PORT_SYSTEM_TIMER(0x0)
+    SEQ_PORT_TYPE_APPLICATION = SEQ_PORT_TYPE_APPLICATION(0x100000)
+    SEQ_PORT_TYPE_DIRECT_SAMPLE = SEQ_PORT_TYPE_DIRECT_SAMPLE(0x800)
+    SEQ_PORT_TYPE_HARDWARE = SEQ_PORT_TYPE_HARDWARE(0x10000)
+    SEQ_PORT_TYPE_MIDI_GENERIC = SEQ_PORT_TYPE_MIDI_GENERIC(0x2)
+    SEQ_PORT_TYPE_MIDI_GM = SEQ_PORT_TYPE_MIDI_GM(0x4)
+    SEQ_PORT_TYPE_MIDI_GM2 = SEQ_PORT_TYPE_MIDI_GM2(0x40)
+    SEQ_PORT_TYPE_MIDI_GS = SEQ_PORT_TYPE_MIDI_GS(0x8)
+    SEQ_PORT_TYPE_MIDI_MT32 = SEQ_PORT_TYPE_MIDI_MT32(0x20)
+    SEQ_PORT_TYPE_MIDI_XG = SEQ_PORT_TYPE_MIDI_XG(0x10)
+    SEQ_PORT_TYPE_PORT = SEQ_PORT_TYPE_PORT(0x80000)
+    SEQ_PORT_TYPE_SAMPLE = SEQ_PORT_TYPE_SAMPLE(0x1000)
+    SEQ_PORT_TYPE_SOFTWARE = SEQ_PORT_TYPE_SOFTWARE(0x20000)
+    SEQ_PORT_TYPE_SPECIFIC = SEQ_PORT_TYPE_SPECIFIC(0x1)
+    SEQ_PORT_TYPE_SYNTH = SEQ_PORT_TYPE_SYNTH(0x400)
+    SEQ_PORT_TYPE_SYNTHESIZER = SEQ_PORT_TYPE_SYNTHESIZER(0x40000)
+    SEQ_QUEUE_DIRECT = SEQ_QUEUE_DIRECT(0xfd)
+    SEQ_TIME_MODE_ABS = SEQ_TIME_MODE_ABS(0x0)
+    SEQ_TIME_MODE_REL = SEQ_TIME_MODE_REL(0x2)
+    SEQ_TIME_STAMP_REAL = SEQ_TIME_STAMP_REAL(0x1)
+    SEQ_TIME_STAMP_TICK = SEQ_TIME_STAMP_TICK(0x0)
+    SEQ_USER_CLIENT = SEQ_USER_CLIENT(0x1)
+
+

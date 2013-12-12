@@ -28,7 +28,8 @@ def findmidiport():
 seq = Sequencer()
 
 # find midi port
-cid, pid = findmidiport()
+# cid, pid = findmidiport()
+cid, pid = (14, 0)
 
 # create a queue
 queue = seq.create_queue()

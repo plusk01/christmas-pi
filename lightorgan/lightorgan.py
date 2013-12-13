@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from pyalsa import alsaseq #ALSA Sequencer Lib
 
-from subprocess import Popen
+import subprocess
 
 #### GPIO INFO ####
 
@@ -39,7 +39,8 @@ percussionOn = False
 
 
 def setup_pins():
-	Popen(['gpio reset'])
+	# reset any pin openings
+	subprocess.call('gpio reset', shell=True)
 
 	# Use header pin number convention, as opposed to BCM convention
 	GPIO.setmode(GPIO.BOARD)

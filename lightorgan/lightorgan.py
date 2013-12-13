@@ -50,10 +50,16 @@ def setup_pins():
 def digital_write(pin, on):
 	if on:
 		print "PIN " + str(pin) + " HIGH"
-		GPIO.output(pin, GPIO.HIGH)
+		try:
+			GPIO.output(pin, GPIO.HIGH)
+		except:
+			pass
 	else:
 		print "PIN " + str(pin) + " LOW"
-		GPIO.output(pin, GPIO.LOW)
+		try:
+			GPIO.output(pin, GPIO.LOW)
+		except:
+			pass
 
 def choose_pin(note, channel):
 	instrument = playChannels[channel]

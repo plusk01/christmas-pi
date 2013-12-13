@@ -186,4 +186,7 @@ seq = midi_open()
 while True:
 	events = seq.receive_events()
 	for event in events:
-		midi_process(event)
+		try:
+			midi_process(event)
+		except:
+			pass

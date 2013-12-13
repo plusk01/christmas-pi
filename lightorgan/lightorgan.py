@@ -74,7 +74,7 @@ def choose_pin(note, channel):
 		# 	(pitch / (# of notes / # of melody pins))
 		pin = pitch / (12.0 / len(MELODY_PINS))
 
-		return pin
+		return int(pin)
 
 def clear_pin_states():
 	pinNotes = {}

@@ -30,6 +30,7 @@ handler.connect_ports((THROUGHPORT_ID, THROUGHPORT_PORT), (client_info['id'], my
 
 
 while True:
-	events = handler.receive_events(5000)
+	events = handler.receive_events()
 	for event in events:
+		import pdb; pdb.set_trace()
 		dump(event)

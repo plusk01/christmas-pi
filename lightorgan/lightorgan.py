@@ -165,6 +165,10 @@ def midi_process(event):
 				digital_write(pin, not percussionOn)
 				percussionOn = not percussionOn
 
+###### DEBUG METHODS #######
+
+def print_pin_info(pin, data, on=True):
+	print "Pin " + str(pin) + " " + 'on' if on else 'off' + ". [Note=" + str(data['note.note']) + "] [Channel=" + str(data['note.channel']) + "]"
 
 ### MAIN CODE ###
 
@@ -176,9 +180,3 @@ while True:
 	events = seq.receive_events()
 	for event in events:
 		midi_process(event)
-
-
-###### DEBUG METHODS #######
-
-def print_pin_info(pin, data, on=True):
-	print "Pin " + str(pin) + " " + 'on' if on else 'off' + ". [Note=" + str(data['note.note']) + "] [Channel=" + str(data['note.channel']) + "]"

@@ -144,7 +144,7 @@ def midi_process(event):
 					pinNotes[pin] = data['note.note']
 					pinChannels[pin] = data['note.channel']
 					# for debugging:
-					print_pin_info(pin, data)
+					print_pin_info(pin, data, True)
 
 			# else, turn pin off
 			else:
@@ -162,8 +162,9 @@ def midi_process(event):
 			# if percussion pin enabled
 			if PERCUSSION_PIN:
 				# flip the value
-				digital_write(pin, not percussionOn)
-				percussionOn = not percussionOn
+				pass
+				#digital_write(pin, not percussionOn)
+				#percussionOn = not percussionOn
 
 
 ### MAIN CODE ###

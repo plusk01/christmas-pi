@@ -135,7 +135,7 @@ def midi_process(event):
 				# if pin is currently available to play a note,
 				# or it currently playing channel can be overriden due to a
 				# higher priority channel (0 being most important), ...
-				if not pinNotes[pin] or (not pinChannels[pin] or pinChannels[pin] > data['note.channel']):
+				if not pin in pinNotes or (not pin in pinChannels or pinChannels[pin] > data['note.channel']):
 
 					# turn pin on, and save the note to pinNotes, and channel to pinChannels
 					digital_write(pin, True)

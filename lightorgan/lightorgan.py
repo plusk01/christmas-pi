@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 from pyalsa import alsaseq #ALSA Sequencer Lib
 
+from subprocess import Popen
+
 #### GPIO INFO ####
 
 # To turn off a percussion, bass, or synth pin, set to None
@@ -37,6 +39,8 @@ percussionOn = False
 
 
 def setup_pins():
+	Popen(['gpio reset'])
+
 	# Use header pin number convention, as opposed to BCM convention
 	GPIO.setmode(GPIO.BOARD)
 

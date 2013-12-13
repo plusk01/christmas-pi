@@ -114,46 +114,45 @@ def midi_process(event):
 	# If the event is a PMGCHANGE, it's a request to setup a specific insrument on a channel [0-15]
 	# also, it's probably the beginning of a new song
 	if event.type == alsaseq.SEQ_EVENT_PGMCHANGE:
-		#print "PGMCHANGE: channel " + str(data.control.channel) + "; instrument " + str(data.control.value)
+		print "PGMCHANGE: channel " + str(data['control.channel']) + "; instrument " + str(data['control.value'])
 
-		import pdb; pdb.set_trace()
 		# clear all the pin states (the current note, the current channel)
 		clear_pin_states()
 
-		set_channel_instrument(data.control.channel, data.control.value);
+		set_channel_instrument(data['control.channel'], data['control.value']);
 
 	# Note on or off event
 	elif event.type == alsaseq.SEQ_EVENT_NOTEON or event.type == alsaseq.SEQ_EVENT_NOTEOFF:
 
-		if not is_percussion_channel(data.note.channel):
+		if not is_percussion_channel(data['note.channel']):
 
-			pin = choose_pin(data.note.note, data.note.channel)
+			pin = choose_pin(data['note.note'], data['note.channel'])
 
 			# NOTE: velocity == 0 is the same as a NOTEOFF event
-			turn_pin_on = not (data.note.velocity == 0 or event.type == alsaseq.SEQ_EVENT_NOTEOFF)
+			turn_pin_on = not (data['note.velocity'] == 0 or event.type == alsaseq.SEQ_EVENT_NOTEOFF)
 
 			if turn_pin_on:
 				# if pin is currently available to play a note,
 				# or it currently playing channel can be overriden due to a
 				# higher priority channel (0 being most important), ...
-				if not pinNotes[pin] or (not pinChannels[pin] or pinChannels[pin] > data.note.channel):
+				if not pinNotes[pin] or (not pinChannels[pin] or pinChannels[pin] > data['note.channel']):
 
 					# turn pin on, and save the note to pinNotes, and channel to pinChannels
 					digital_write(pin, True)
-					pinNotes[pin] = data.note.note
-					pinChannels[pin] = data.note.channel
+					pinNotes[pin] = data['note.note']
+					pinChannels[pin] = data['note.channel']
 					# for debugging:
 					print_pin_info(pin, data)
 
 			# else, turn pin off
 			else:
 				# if this is the note/channel that turned the pin on ...
-				if pinNotes[pin] == data.note.note and pinChannels[pin] == data.note.channel:
+				if pinNotes[pin] == data['note.note'] and pinChannels[pin] == data['note.channel']:
 					# turn pin off, indicate that this pin is now available
 					digital_write(pin, False)
 					del pinNotes[pin]
 					del pinChannels[pin]
-					#for debugging:
+					# for debugging:
 					print_pin_info(pin, data, False)
 
 		# else, this is a percussion channel
@@ -180,4 +179,4 @@ while True:
 ###### DEBUG METHODS #######
 
 def print_pin_info(pin, data, on=True):
-	print "Pin " + str(pin) + " " + 'on' if on else 'off' + ". [Note=" + str(data.note.note) + "] [Channel=" + str(data.note.channel) + "]"
+	print "Pin " + str(pin) + " " + 'on' if on else 'off' + ". [Note=" + str(data['note.note']) + "] [Channel=" + str(data['note.channel']) + "]"

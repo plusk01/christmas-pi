@@ -7,9 +7,9 @@ import alsaseq #ALSA Sequencer Lib
 
 MELODY_PINS = [3, 5, 7, 11, 13]
 
-PERCUSSION_PIN = 5
-BASS_PIN = 6
-SYNTH_PIN = 6
+PERCUSSION_PIN = 15
+BASS_PIN = 19
+SYNTH_PIN = 19
 
 TOTAL_PINS = len(MELODY_PINS) + 3
 

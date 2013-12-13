@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import alsaseq #ALSA Sequencer Lib
+from pyalsa import alsaseq #ALSA Sequencer Lib
 
 #### GPIO INFO ####
 
@@ -114,8 +114,9 @@ def midi_process(event):
 	# If the event is a PMGCHANGE, it's a request to setup a specific insrument on a channel [0-15]
 	# also, it's probably the beginning of a new song
 	if event.type == alsaseq.SEQ_EVENT_PGMCHANGE:
-		print "PGMCHANGE: channel " + str(data.control.channel) + "; instrument " + str(data.control.value)
+		#print "PGMCHANGE: channel " + str(data.control.channel) + "; instrument " + str(data.control.value)
 
+		import pdb; pdb.set_trace()
 		# clear all the pin states (the current note, the current channel)
 		clear_pin_states()
 

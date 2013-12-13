@@ -49,8 +49,10 @@ def setup_pins():
 
 def digital_write(pin, on):
 	if on:
+		print "PIN " + str(pin) + " HIGH"
 		GPIO.output(pin, GPIO.HIGH)
 	else:
+		print "PIN " + str(pin) + " LOW"
 		GPIO.output(pin, GPIO.LOW)
 
 def choose_pin(note, channel):
@@ -124,9 +126,9 @@ def midi_process(event):
 	# Note on or off event
 	elif event.type == alsaseq.SEQ_EVENT_NOTEON or event.type == alsaseq.SEQ_EVENT_NOTEOFF:
 
-		if not is_percussion_channel(data['note.channel']):
+		pin = choose_pin(data['note.note'], data['note.channel'])
 
-			pin = choose_pin(data['note.note'], data['note.channel'])
+		if not is_percussion_channel(data['note.channel']):
 
 			# NOTE: velocity == 0 is the same as a NOTEOFF event
 			turn_pin_on = not (data['note.velocity'] == 0 or event.type == alsaseq.SEQ_EVENT_NOTEOFF)

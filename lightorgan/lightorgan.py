@@ -168,9 +168,9 @@ def midi_process(event):
 			# if percussion pin enabled
 			if PERCUSSION_PIN:
 				# flip the value
-				pass
-				#digital_write(pin, not percussionOn)
-				#percussionOn = not percussionOn
+				global percussionOn
+				digital_write(pin, not percussionOn)
+				percussionOn = not percussionOn
 
 ###### DEBUG METHODS #######
 

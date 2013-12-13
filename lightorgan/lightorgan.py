@@ -11,7 +11,7 @@ PERCUSSION_PIN = 5
 BASS_PIN = 6
 SYNTH_PIN = 6
 
-TOTAL_PINS = MELODY_PINS.count() + 3
+TOTAL_PINS = len(MELODY_PINS) + 3
 
 #### ALSA INFO ####
 
@@ -72,7 +72,7 @@ def choose_pin(note, channel):
 
 		# the pin to use is determined by:
 		# 	(pitch / (# of notes / # of melody pins))
-		pin = pitch / (12.0 / MELODY_PINS.count())
+		pin = pitch / (12.0 / len(MELODY_PINS))
 
 		return pin
 

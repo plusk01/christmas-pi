@@ -155,7 +155,7 @@ def midi_process(event):
 			# else, turn pin off
 			else:
 				# if this is the note/channel that turned the pin on ...
-				if pinNotes[pin] == data['note.note'] and pinChannels[pin] == data['note.channel']:
+				if pin in pinNotes and pinNotes[pin] == data['note.note'] and pin in pinChannels and pinChannels[pin] == data['note.channel']:
 					# turn pin off, indicate that this pin is now available
 					digital_write(pin, False)
 					del pinNotes[pin]

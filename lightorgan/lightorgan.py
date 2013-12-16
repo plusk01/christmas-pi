@@ -7,11 +7,11 @@ import subprocess
 
 # To turn off a percussion, bass, or synth pin, set to None
 
-MELODY_PINS = [3, 5, 7, 11, 13]
+MELODY_PINS = [3, 5, 7]
 
-PERCUSSION_PIN = 15
-BASS_PIN = 19
-SYNTH_PIN = 19
+PERCUSSION_PIN = 19
+BASS_PIN = 15
+SYNTH_PIN = 15
 
 TOTAL_PINS = len(MELODY_PINS) + 3
 
